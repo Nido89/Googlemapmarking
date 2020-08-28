@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Map Markers</title>
+
+    <style>
+        #map{
+            height:400px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    
+    <h1>Google Map Marking</h1>
+    <div id="map"></div>
+    <script>
+        function initMap(){
+
+            // Map options
+            var options = {
+                zoom:13,
+                center: {lat:60.4023,lng:25.1358}
+            }
+
+            // New map
+            var map= new google.maps.Map(document.getElementById('map'),options);
+
+            // Listen for click even on map
+            google.maps.event.addListener(map,'click', function(event){
+                // Add Any Marker
+                addMarker({coords:event.latLng});
+            });
+
+            /*
+            // Adding Markers to the map
+            var marker = new google.maps.Marker({
+                position:{
+                    lat:60.4023,
+                    lng:25.1358},
+                    map:map,
+                    icon:'https://maps.google.com/mapfiles/kml/shapes/parking_lot_maps.png'
+            });
+
+
+            // Adding Info on Marker
+            var infoWindow = new google.maps.InfoWindow({
+                content:'<h1>My Car Parked Here</h1>'
+            });
+            marker.addListener('click',function(){
+                infoWindow.open(map,marker);
+            });
+
+            */
+
+
+            // Array of Markers
+
+            var markers = [
+            {coords:{lat:60.404060,lng:25.135300},
+            iconImage:'https://maps.google.com/mapfiles/kml/shapes/cabs.png',
+            content:'<h1>My Car Parked here</h1>'
+        },
+        {coords:{lat:60.4029,lng:25.1359},
+            content:'<h1>My friend House</h1>'
+        },
+        {coords:{lat:60.4021,lng:25.1351},
+            content:'<h1>My favorite Spot</h1>'
+        }
+            ];
+
+            // Looping through Markers
+            for (var i=0; i < markers.length; i++){
+                
+                
+                // Add Markers to the map 
+                addMarker(markers[i]);
+            }
+
+            /* addMarker(
+                {coords:{lat:60.404060,lng:25.135300},
+            iconImage:'https://maps.google.com/mapfiles/kml/shapes/cabs.png',
+            content:'<h1>My Car Parked here</h1>'
+        });
+            addMarker({coords:{lat:60.4029,lng:25.1359},
+            content:'<h1>My friend House</h1>'
+        });
+            addMarker({coords:{lat:60.4021,lng:25.1351},
+            content:'<h1>My favorite Spot</h1>'
+        }); */
+
+            //Add Marker Function Dynamic Markers
+            function addMarker(props){
+
+
+                  // Adding Markers to the map
+            var marker = new google.maps.Marker({
+                position:props.coords,
+                    map:map,
+                    //icon:props.iconImage
+            });
+
+
+            // Check for CustomIcon 
+            if (props.iconImage) {
+
+                // Set IconImage
+                marker.setIcon(props.iconImage);
+
+            }
+            // Check for Content
+            if(props.content){
+                  // Adding Info on Marker
+            var infoWindow = new google.maps.InfoWindow({
+                content: props.content
+            });
+            marker.addListener('click',function(){
+                infoWindow.open(map,marker);
+            });
+
+            }
+            
+            }
+        }
+    </script>
+
+    <script defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD04ScBSmBy2-euaW6ph_qoRbcZbuIBOVY&callback=initMap">
+    </script
+</body>
+</html>
